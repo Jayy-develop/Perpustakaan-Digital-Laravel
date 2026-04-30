@@ -55,11 +55,4 @@
     </div>
 </div>
 {{ $fines->links() }}
-
-@php
-    $memberStats = [
-        'pending_amount' => $fines->where('status', 'pending')->sum('amount'),
-        'paid_amount' => $fines->where('status', 'paid')->sum('amount'),
-    ];
-@endphp
 @endsection

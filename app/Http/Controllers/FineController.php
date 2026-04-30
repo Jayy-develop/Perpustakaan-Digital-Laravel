@@ -35,7 +35,12 @@ class FineController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('fines.member', compact('fines'));
+        $memberStats = [
+            'pending_amount' => $fines->where('status', 'pending')->sum('amount'),
+            'paid_amount' => $fines->where('status', 'paid')->sum('amount'),
+        ];
+
+        return view('fines.member', compact('fines', 'memberStats'));
     }
 
     /**

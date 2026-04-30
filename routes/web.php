@@ -36,6 +36,9 @@ Route::middleware(['auth', 'verified', 'member'])->group(function () {
     Route::get('/books/{bookId}/reviews', [ReviewController::class, 'indexByBook'])->name('reviews.index');
     Route::get('/books/{bookId}/reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('/books/{bookId}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+});
+
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/reviews/{reviewId}/edit', [ReviewController::class, 'edit'])->name('reviews.edit');
     Route::put('/reviews/{reviewId}', [ReviewController::class, 'update'])->name('reviews.update');
     Route::delete('/reviews/{reviewId}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
