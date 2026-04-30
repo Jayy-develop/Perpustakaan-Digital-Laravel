@@ -15,29 +15,6 @@ class UserFactory extends Factory
 {
    protected $model = User::class;
     protected static ?string $password;
-    public function definition(): array
-    {
-        return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
-        ];
-    }
-
-    public function create(array $attributes = []): User
-    {
-        $attributes = array_merge($this->definition(), $attributes);
-        return parent::create($attributes);
-    }
-
-    public function update(User $user, array $attributes = []): User
-    {
-        $attributes = array_merge($this->definition(), $attributes);
-        $user->update($attributes);
-        return $user;
-    }
     /**
      * Define the model's default state.
      *
