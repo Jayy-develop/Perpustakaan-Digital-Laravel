@@ -15,8 +15,8 @@ class IsMember
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->user()) {
-            return redirect('/login');
+        if (!$request->user() || $request->user()->role !== 'member') {
+            return redirect('/dashboard')->with('error', 'Unauthorized access');
         }
 
         return $next($request);

@@ -114,7 +114,7 @@ class LoanController extends Controller
             // Increase stock
             $loan->book->increment('stock');
 
-            return redirect()->route('loans.index')->with('success', 'Pengembalian buku berhasil dicatat');
+            return redirect()->route(auth()->user()->role === 'member' ? 'loans.index' : 'admin.loans.index')->with('success', 'Pengembalian buku berhasil dicatat');
         }
 
         return redirect()->back()->with('error', 'Loan sudah dikembalikan');
@@ -132,6 +132,6 @@ class LoanController extends Controller
         }
 
         $loan->delete();
-        return redirect()->route('loans.index')->with('success', 'Peminjaman berhasil dihapus');
+        return redirect()->route(auth()->user()->role === 'member' ? 'loans.index' : 'admin.loans.index')->with('success', 'Peminjaman berhasil dihapus');
     }
 }

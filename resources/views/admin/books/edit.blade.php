@@ -13,7 +13,7 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('books.update', $book->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.books.update', $book->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -103,7 +103,7 @@
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-save"></i> Perbarui Buku
                         </button>
-                        <a href="{{ route('books.index') }}" class="btn btn-secondary">
+                        <a href="{{ route('admin.books.index') }}" class="btn btn-secondary">
                             <i class="fas fa-arrow-left"></i> Kembali
                         </a>
                     </div>

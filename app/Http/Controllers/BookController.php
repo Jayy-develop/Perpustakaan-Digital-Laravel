@@ -30,7 +30,7 @@ class BookController extends Controller
         $books = $query->paginate(12);
         $categories = Category::all();
 
-        if (auth()->check() && auth()->user()->role === 'admin') {
+        if (auth()->check() && in_array(auth()->user()->role, ['admin', 'petugas'])) {
             return view('admin.books.index', compact('books', 'categories'));
         }
 
@@ -68,7 +68,7 @@ class BookController extends Controller
 
         Book::create($validated);
 
-        return redirect()->route('books.index')->with('success', 'Buku berhasil ditambahkan');
+        return redirect()->route($this->getBookIndexRoute())->with('success', 'Buku berhasil ditambahkan');
     }
 
     /**
@@ -81,9 +81,10 @@ class BookController extends Controller
         $averageRating = $book->reviews()->approved()->avg('rating') ?? 0;
         $ratingCount = $book->reviews()->approved()->count();
         
-        if (auth()->check() && auth()->user()->role === 'admin') {
+        if (auth()->check() && in_array(auth()->user()->role, ['admin', 'petugas'])) {
             return view('admin.books.show', compact('book', 'reviews', 'averageRating', 'ratingCount'));
         }
+
         return view('books.show', compact('book', 'reviews', 'averageRating', 'ratingCount'));
     }
 
@@ -120,7 +121,14 @@ class BookController extends Controller
 
         $book->update($validated);
 
-        return redirect()->route('books.index')->with('success', 'Buku berhasil diperbarui');
+        return redirect()->route($this->getBookIndexRoute())->with('success', 'Buku berhasil diperbarui');
+    }
+
+    private function getBookIndexRoute(): string
+    {
+        return auth()->check() && in_array(auth()->user()->role, ['admin', 'petugas'])
+            ? 'admin.books.index'
+            : 'books.index';
     }
 
     /**
@@ -130,6 +138,6 @@ class BookController extends Controller
     {
         $book = Book::findOrFail($id);
         $book->delete();
-        return redirect()->route('books.index')->with('success', 'Buku berhasil dihapus');
+        return redirect()->route($this->getBookIndexRoute())->with('success', 'Buku berhasil dihapus');
     }
 }

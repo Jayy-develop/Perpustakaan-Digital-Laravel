@@ -10,7 +10,7 @@
     @if(auth()->user()->role === 'admin' || auth()->user()->role === 'petugas')
     <div class="col-md-6 text-end">
         @if(auth()->user()->role === 'admin')
-        <a href="{{ route('books.create') }}" class="btn btn-primary">
+        <a href="{{ route('admin.books.create') }}" class="btn btn-primary">
             <i class="fas fa-plus"></i> Tambah Buku
         </a>
         @endif
@@ -20,7 +20,7 @@
 
 <div class="card mb-4">
     <div class="card-body">
-        <form method="GET" action="{{ auth()->user()->role === 'admin' ? route('books.index') : route('admin.books.index') }}" class="row">
+        <form method="GET" action="{{ route('admin.books.index') }}" class="row">
             <div class="col-md-6">
                 <input type="text" name="search" class="form-control" placeholder="Cari judul atau pengarang..." value="{{ request('search') }}">
             </div>
@@ -78,14 +78,14 @@
                     <td>{{ $book->year ?? '-' }}</td>
                     @if(auth()->user()->role === 'admin' || auth()->user()->role === 'petugas')
                     <td>
-                        <a href="{{ route('books.show', $book->id) }}" class="btn btn-sm btn-info" title="Lihat">
+                        <a href="{{ route('admin.books.show', $book->id) }}" class="btn btn-sm btn-info" title="Lihat">
                             <i class="fas fa-eye"></i>
                         </a>
                         @if(auth()->user()->role === 'admin')
-                        <a href="{{ route('books.edit', $book->id) }}" class="btn btn-sm btn-warning" title="Edit">
+                        <a href="{{ route('admin.books.edit', $book->id) }}" class="btn btn-sm btn-warning" title="Edit">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('admin.books.destroy', $book->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger" title="Hapus" onclick="confirmDelete(event)">

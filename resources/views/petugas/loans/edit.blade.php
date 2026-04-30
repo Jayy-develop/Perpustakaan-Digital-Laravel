@@ -6,7 +6,7 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('loans.update', $loan->id) }}" method="POST">
+                <form action="{{ route('admin.loans.update', $loan->id) }}" method="POST">
                     @csrf @method('PUT')
                     <div class="mb-3">
                         <label class="form-label"><strong>User:</strong></label>

@@ -95,10 +95,10 @@
                 <a href="{{ route('categories.index') }}" class="btn btn-outline-info btn-sm me-2 mb-2">
                     <i class="fas fa-list"></i> Kelola Kategori
                 </a>
-                <a href="{{ route('books.index') }}" class="btn btn-outline-success btn-sm me-2 mb-2">
+                <a href="{{ route('admin.books.index') }}" class="btn btn-outline-success btn-sm me-2 mb-2">
                     <i class="fas fa-book"></i> Kelola Buku
                 </a>
-                <a href="{{ route('loans.index') }}" class="btn btn-outline-warning btn-sm mb-2">
+                <a href="{{ route('admin.loans.index') }}" class="btn btn-outline-warning btn-sm mb-2">
                     <i class="fas fa-exchange"></i> Kelola Peminjaman
                 </a>
             </div>

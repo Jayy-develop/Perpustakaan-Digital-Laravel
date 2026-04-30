@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('book_id');
             $table->unsignedBigInteger('user_id');
-            $table->tinyInteger('rating')->between(1, 5);
+            $table->tinyInteger('rating');
             $table->text('comment')->nullable();
             $table->boolean('is_approved')->default(false);
             $table->timestamps();

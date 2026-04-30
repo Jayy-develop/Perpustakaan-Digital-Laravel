@@ -13,7 +13,7 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.books.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="mb-3">
@@ -97,7 +97,7 @@
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-save"></i> Simpan Buku
                         </button>
-                        <a href="{{ route('books.index') }}" class="btn btn-secondary">
+                        <a href="{{ route('admin.books.index') }}" class="btn btn-secondary">
                             <i class="fas fa-arrow-left"></i> Kembali
                         </a>
                     </div>

@@ -81,7 +81,7 @@
                             <small class="text-muted">{{ $review->created_at->format('d M Y') }}</small>
                         </td>
                         <td>
-                            <a href="{{ route('books.show', $review->book_id) }}" class="btn btn-sm btn-info" title="Lihat Buku"><i class="fas fa-book"></i></a>
+                            <a href="{{ route('admin.books.show', $review->book_id) }}" class="btn btn-sm btn-info" title="Lihat Buku"><i class="fas fa-book"></i></a>
                             @if(!$review->is_approved)
                                 <form action="{{ route('reviews.approve', $review->id) }}" method="POST" style="display:inline;">
                                     @csrf

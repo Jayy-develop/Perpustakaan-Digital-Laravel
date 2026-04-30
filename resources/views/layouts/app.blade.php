@@ -149,10 +149,10 @@
                         <a href="{{ route('categories.index') }}" class="@if(request()->routeIs('categories.*')) active @endif">
                             <i class="fas fa-list"></i> Kategori
                         </a>
-                        <a href="{{ route('books.index') }}" class="@if(request()->routeIs('books.*')) active @endif">
+                        <a href="{{ route('admin.books.index') }}" class="@if(request()->routeIs('admin.books.*')) active @endif">
                             <i class="fas fa-book"></i> Buku
                         </a>
-                        <a href="{{ route('loans.index') }}" class="@if(request()->routeIs('loans.*')) active @endif">
+                        <a href="{{ route('admin.loans.index') }}" class="@if(request()->routeIs('admin.loans.*')) active @endif">
                             <i class="fas fa-exchange"></i> Peminjaman
                         </a>
                         <a href="{{ route('fines.index') }}" class="@if(request()->routeIs('fines.*')) active @endif">
@@ -184,7 +184,9 @@
                         <a href="{{ route('loans.index') }}" class="@if(request()->routeIs('loans.index')) active @endif">
                             <i class="fas fa-exchange"></i> Peminjaman Saya
                         </a>
-                       
+                        <a href="{{ route('fines.member') }}" class="@if(request()->routeIs('fines.member')) active @endif">
+                            <i class="fas fa-file-invoice-dollar"></i> Denda Saya
+                        </a>
                     @endif
                 </div>
                 @endauth

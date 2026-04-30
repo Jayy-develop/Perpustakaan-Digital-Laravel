@@ -26,11 +26,6 @@ class Fine extends Model
         return $this->belongsTo(Loan::class);
     }
 
-    public function user()
-    {
-        return $this->through('loan')->has('user');
-    }
-
     // Scopes
     public function scopePending($query)
     {

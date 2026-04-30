@@ -8,47 +8,31 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FineController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
-// ===== WELCOME PAGE =====
 Route::get('/', function () {
-    if (Auth::check()) {
-        return redirect()->route('dashboard');
-    }
-    return view('welcome');
+    return Auth::check() ? redirect()->route('dashboard') : view('welcome');
 })->name('welcome');
 
-
-// ===== DASHBOARD =====
-Route::middleware(['auth','verified'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class,'index'])
-        ->name('dashboard');
-});
-// Dashboard Route
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
-// Authenticated routes for all users
 Route::middleware(['auth', 'verified', 'member'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Public book browsing
     Route::get('/books', [BookController::class, 'index'])->name('books.index');
     Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
 
-    // Member loan routes
     Route::get('/loans', [LoanController::class, 'index'])->name('loans.index');
     Route::get('/loans/create', [LoanController::class, 'create'])->name('loans.create');
     Route::post('/loans', [LoanController::class, 'store'])->name('loans.store');
 
-    // Member fines
-    Route::get('/fines', [FineController::class, 'memberFines'])->name('fines.member');
+    Route::get('/my-fines', [FineController::class, 'memberFines'])->name('fines.member');
 
-    // Member reviews
     Route::get('/books/{bookId}/reviews', [ReviewController::class, 'indexByBook'])->name('reviews.index');
     Route::get('/books/{bookId}/reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('/books/{bookId}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
@@ -57,46 +41,32 @@ Route::middleware(['auth', 'verified', 'member'])->group(function () {
     Route::delete('/reviews/{reviewId}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 });
 
-// Admin and Petugas routes
-Route::middleware(['auth', 'verified', 'petugas','member'])->group(function () {
-    // Books management
+Route::middleware(['auth', 'verified', 'petugas'])->group(function () {
     Route::get('/admin/books', [BookController::class, 'index'])->name('admin.books.index');
-    Route::get('/admin/books/create', [BookController::class, 'create'])->name('books.create');
-    Route::post('/admin/books', [BookController::class, 'store'])->name('books.store');
-    Route::get('/admin/books/{id}', [BookController::class, 'show'])->name('books.show.admin');
-    Route::get('/admin/books/{id}/edit', [BookController::class, 'edit'])->name('books.edit');
-    Route::put('/admin/books/{id}', [BookController::class, 'update'])->name('books.update');
-    Route::delete('/admin/books/{id}', [BookController::class, 'destroy'])->name('books.destroy');
+    Route::get('/admin/books/create', [BookController::class, 'create'])->name('admin.books.create');
+    Route::post('/admin/books', [BookController::class, 'store'])->name('admin.books.store');
+    Route::get('/admin/books/{id}', [BookController::class, 'show'])->name('admin.books.show');
+    Route::get('/admin/books/{id}/edit', [BookController::class, 'edit'])->name('admin.books.edit');
+    Route::put('/admin/books/{id}', [BookController::class, 'update'])->name('admin.books.update');
+    Route::delete('/admin/books/{id}', [BookController::class, 'destroy'])->name('admin.books.destroy');
 
-    // Loans management
     Route::get('/admin/loans', [LoanController::class, 'index'])->name('admin.loans.index');
-    Route::get('/admin/loans/{id}', [LoanController::class, 'show'])->name('loans.show');
-    Route::get('/admin/loans/{id}/edit', [LoanController::class, 'edit'])->name('loans.edit');
-    Route::put('/admin/loans/{id}', [LoanController::class, 'update'])->name('loans.update');
+    Route::get('/admin/loans/{id}', [LoanController::class, 'show'])->name('admin.loans.show');
+    Route::get('/admin/loans/{id}/edit', [LoanController::class, 'edit'])->name('admin.loans.edit');
+    Route::put('/admin/loans/{id}', [LoanController::class, 'update'])->name('admin.loans.update');
+    Route::delete('/admin/loans/{id}', [LoanController::class, 'destroy'])->name('admin.loans.destroy');
 });
 
-// Admin only routes
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
-    // Categories management
     Route::resource('categories', CategoryController::class);
-
-    // Users management
     Route::resource('users', UserController::class);
 
-    // All books management (duplicate for consistency)
-    Route::resource('books', BookController::class)->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
-    
-    // All loans management
-    Route::resource('loans', LoanController::class);
-
-    // Fines management
     Route::get('/fines', [FineController::class, 'index'])->name('fines.index');
     Route::get('/fines/{fine}', [FineController::class, 'show'])->name('fines.show');
     Route::post('/fines/{fine}/mark-paid', [FineController::class, 'markPaid'])->name('fines.mark-paid');
     Route::post('/fines/generate', [FineController::class, 'generateFines'])->name('fines.generate');
     Route::delete('/fines/{fine}', [FineController::class, 'destroy'])->name('fines.destroy');
 
-    // Reviews management (admin moderation)
     Route::get('/admin/reviews', [ReviewController::class, 'adminIndex'])->name('reviews.admin-index');
     Route::post('/reviews/{reviewId}/approve', [ReviewController::class, 'approve'])->name('reviews.approve');
     Route::post('/reviews/{reviewId}/reject', [ReviewController::class, 'reject'])->name('reviews.reject');

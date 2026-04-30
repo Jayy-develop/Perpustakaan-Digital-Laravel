@@ -18,7 +18,7 @@
                     <td><span class="badge @if($loan->status==='borrowed') badge-borrowed @else badge-returned @endif">{{ $loan->status }}</span></td>
                     <td>
                         @if($loan->status === 'borrowed')
-                        <a href="{{ route('loans.edit', $loan->id) }}" class="btn btn-sm btn-success"><i class="fas fa-check"></i> Kembalikan</a>
+                        <a href="{{ route('admin.loans.edit', $loan->id) }}" class="btn btn-sm btn-success"><i class="fas fa-check"></i> Kembalikan</a>
                         @endif
                     </td>
                 </tr>

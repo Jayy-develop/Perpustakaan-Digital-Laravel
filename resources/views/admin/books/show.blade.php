@@ -5,7 +5,7 @@
 @section('content')
 <div class="row mb-4">
     <div class="col-md-12">
-        <a href="{{ auth()->user()->role === 'admin' ? route('books.index') : route('admin.books.index') }}" class="btn btn-sm btn-secondary">
+        <a href="{{ route('admin.books.index') }}" class="btn btn-sm btn-secondary">
             <i class="fas fa-arrow-left"></i> Kembali
         </a>
     </div>
@@ -86,10 +86,10 @@
 
                 @if(auth()->user()->role === 'admin')
                     <div class="mt-3">
-                        <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning btn-sm">
+                        <a href="{{ route('admin.books.edit', $book->id) }}" class="btn btn-warning btn-sm">
                             <i class="fas fa-edit"></i> Edit
                         </a>
-                        <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('admin.books.destroy', $book->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm" onclick="confirmDelete(event)">
