@@ -13,6 +13,7 @@ use phpDocumentor\Reflection\Types\This;
  */
 class UserFactory extends Factory
 {
+    
    protected $model = User::class;
     protected static ?string $password;
     /**
