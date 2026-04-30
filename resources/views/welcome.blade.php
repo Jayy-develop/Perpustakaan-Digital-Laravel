@@ -1,27 +1,6 @@
 <x-guest-layout>
 
-<!-- NAVBAR -->
-<header class="bg-white shadow-md">
-<div class="max-w-7xl mx-auto flex justify-between items-center px-8 py-5">
-
-<h1 class="text-2xl font-bold text-indigo-600">
-📚 Gramedia Library
-</h1>
-
-<div class="space-x-8 text-gray-700 font-medium">
-<a href="#">Beranda</a>
-<a href="#">Koleksi</a>
-<a href="#">Kategori</a>
-<a href="#">Tentang</a>
-
-<a href="{{ route('login') }}"
-class="bg-indigo-600 text-white px-5 py-2 rounded-lg">
-Login
-</a>
-</div>
-
-</div>
-</header>
+<x-guest-navbar />
 
 <!-- HERO -->
 <section class="bg-gradient-to-r from-indigo-50 to-white">
@@ -50,7 +29,7 @@ class="rounded-3xl shadow-2xl">
 </section>
 
 <!-- CATEGORY -->
-<section class="py-20 bg-white">
+<section id="category" class="py-20 bg-white">
 <h2 class="text-3xl font-bold text-center mb-12">
 Kategori Populer
 </h2>
@@ -67,7 +46,7 @@ Kategori Populer
 </section>
 
 <!-- BOOK GRID -->
-<section class="py-24 bg-gray-50">
+<section id="book-grid" class="py-24 bg-gray-50">
 
 <h2 class="text-3xl font-bold text-center mb-16">
 Rekomendasi Buku
@@ -93,7 +72,7 @@ class="rounded-t-xl">
 </section>
 
 <!-- WHY US -->
-<section class="bg-indigo-600 text-white py-24">
+<section id="why-us" class="bg-indigo-600 text-white py-24">
 
 <h2 class="text-3xl font-bold text-center mb-16">
 Kenapa Memilih Kami?
@@ -138,23 +117,12 @@ Apa Kata Pengguna
 </div>
 </section>
 
-<!-- CTA -->
-<section class="bg-gray-900 text-white text-center py-20">
-
-<h2 class="text-4xl font-bold mb-6">
-Gabung Sekarang
-</h2>
-
-<a href="{{ route('login') }}"
-class="bg-indigo-600 px-10 py-4 rounded-xl font-semibold">
-Login Sistem
-</a>
 
 </section>
 
 <!-- FOOTER -->
 <footer class="bg-black text-gray-400 py-12 text-center">
-© {{ date('Y') }} Gramedia Library System
+© {{ date('Y') }} Smart Library Management System. All rights reserved.
 </footer>
 
 </x-guest-layout>
