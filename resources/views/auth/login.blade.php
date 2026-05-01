@@ -3,6 +3,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
+/* Reset */
 *{
 margin:0;
 padding:0;
@@ -12,56 +13,56 @@ font-family:'Poppins',sans-serif;
 
 /* Background */
 body{
-height:100vh;
+min-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
 background:#020617;
-overflow:hidden;
+padding:20px;
 }
 
-/* Animated luxury glow */
-body::before{
-content:"";
-position:absolute;
-width:700px;
-height:700px;
-background:radial-gradient(circle,#6366f1,transparent);
-filter:blur(200px);
-top:-200px;
-left:-200px;
-opacity:.4;
-}
-
+/* Glow Effect */
+body::before,
 body::after{
 content:"";
 position:absolute;
 width:600px;
 height:600px;
-background:radial-gradient(circle,#9333ea,transparent);
 filter:blur(180px);
-bottom:-200px;
-right:-200px;
 opacity:.4;
+pointer-events:none;
 }
 
-/* Glass Card */
+body::before{
+background:radial-gradient(circle,#6366f1,transparent);
+top:-200px;
+left:-200px;
+}
+
+body::after{
+background:radial-gradient(circle,#9333ea,transparent);
+bottom:-200px;
+right:-200px;
+}
+
+/* Card */
 .card{
-width:420px;
-padding:50px;
-border-radius:25px;
+width:100%;
+max-width:420px;
+padding:40px 30px;
+border-radius:20px;
 background:rgba(255,255,255,0.06);
-backdrop-filter:blur(30px);
-border:1px solid rgba(255,255,255,0.15);
+backdrop-filter:blur(25px);
+border:1px solid rgba(255,255,255,0.1);
 box-shadow:
-0 40px 80px rgba(0,0,0,0.6),
-inset 0 0 40px rgba(255,255,255,0.05);
-color:blue;
+0 30px 60px rgba(0,0,0,0.5),
+inset 0 0 20px rgba(255,255,255,0.05);
+color:white;
 }
 
 /* Title */
 .card h1{
-font-size:32px;
+font-size:28px;
 font-weight:600;
 text-align:center;
 margin-bottom:10px;
@@ -70,26 +71,27 @@ margin-bottom:10px;
 .subtitle{
 text-align:center;
 color:#94a3b8;
-margin-bottom:35px;
-font-size:14px;
+margin-bottom:25px;
+font-size:13px;
 }
 
-/* Input */
+/* Form Group */
 .group{
-margin-bottom:22px;
+margin-bottom:18px;
 }
 
 .group label{
-font-size:13px;
+font-size:12px;
 color:#cbd5f5;
 display:block;
-margin-bottom:6px;
+margin-bottom:5px;
 }
 
+/* Input */
 .input{
 width:100%;
-padding:14px;
-border-radius:12px;
+padding:13px;
+border-radius:10px;
 border:none;
 background:rgba(255,255,255,0.12);
 color:white;
@@ -106,35 +108,65 @@ box-shadow:0 0 0 2px #6366f1;
 .options{
 display:flex;
 justify-content:space-between;
-font-size:13px;
-margin-top:8px;
+font-size:12px;
+margin-top:6px;
+flex-wrap:wrap;
+gap:10px;
 }
 
 /* Button */
 .login-btn{
-margin-top:30px;
+margin-top:25px;
 width:100%;
-padding:15px;
-border-radius:14px;
+padding:14px;
+border-radius:12px;
 border:none;
 background:linear-gradient(135deg,#6366f1,#9333ea);
 color:white;
-font-size:16px;
+font-size:15px;
 cursor:pointer;
-transition:.35s;
+transition:.3s;
 }
 
-.login-btn:hover{
-transform:translateY(-3px);
-box-shadow:0 20px 40px rgba(99,102,241,.6);
+.login-btn:active{
+transform:scale(0.97);
+}
+
+/* Register Link */
+.register{
+margin-top:18px;
+text-align:center;
+font-size:13px;
+color:#94a3b8;
+}
+
+.register a{
+color:#a5b4fc;
+text-decoration:none;
+font-weight:500;
+}
+
+.register a:hover{
+text-decoration:underline;
 }
 
 /* Footer */
 .footer{
-margin-top:25px;
+margin-top:20px;
 text-align:center;
-font-size:12px;
+font-size:11px;
 color:#64748b;
+}
+
+/* Mobile */
+@media (max-width:480px){
+.card{
+padding:30px 20px;
+}
+
+.card h1{
+font-size:24px;
+}
 }
 </style>
 
@@ -150,18 +182,21 @@ color:#64748b;
 
 <div class="group">
 <label>Email Address</label>
-<input class="input"
+<input 
+class="input"
 type="email"
 name="email"
 value="{{ old('email') }}"
-required autofocus
+required 
+autofocus
 placeholder="you@email.com">
 <x-input-error :messages="$errors->get('email')" />
 </div>
 
 <div class="group">
 <label>Password</label>
-<input class="input"
+<input 
+class="input"
 type="password"
 name="password"
 required
@@ -181,14 +216,19 @@ Forgot?
 @endif
 </div>
 
-<button class="login-btn">
-Login 
+<button type="submit" class="login-btn">
+Login
 </button>
 
 </form>
 
+<div class="register">
+Belum punya akun?
+<a href="{{ route('register') }}">Daftar</a>
+</div>
+
 <div class="footer">
-Secure Authentication • Laravel System
+Authentication Halaman Login
 </div>
 
 </div>
