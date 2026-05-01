@@ -19,8 +19,10 @@ class BookController extends Controller
         $query = Book::with('category');
 
         if ($search) {
-            $query->where('title', 'like', '%' . $search . '%')
-                  ->orWhere('author', 'like', '%' . $search . '%');
+            $query->where(function ($subQuery) use ($search) {
+                $subQuery->where('title', 'like', '%' . $search . '%')
+                         ->orWhere('author', 'like', '%' . $search . '%');
+            });
         }
 
         if ($category_id) {

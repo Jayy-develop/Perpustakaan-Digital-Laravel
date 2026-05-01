@@ -84,11 +84,12 @@
                     <p>Diperbarui: {{ $book->updated_at->format('d M Y H:i') }}</p>
                 </div>
 
-                @if(auth()->user()->role === 'admin')
+                @if(auth()->user()->role === 'admin' || auth()->user()->role === 'petugas')
                     <div class="mt-3">
                         <a href="{{ route('admin.books.edit', $book->id) }}" class="btn btn-warning btn-sm">
                             <i class="fas fa-edit"></i> Edit
                         </a>
+                        @if(auth()->user()->role === 'admin')
                         <form action="{{ route('admin.books.destroy', $book->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
@@ -96,6 +97,7 @@
                                 <i class="fas fa-trash"></i> Hapus
                             </button>
                         </form>
+                        @endif
                     </div>
                 @endif
             </div>

@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-8 py-5">
 
         <h1 class="text-2xl font-bold text-indigo-600">
-            📚 Gramedia Library
+            Perpustakaan Digital
         </h1>
 
         <div class="flex flex-wrap items-center gap-4 text-gray-700 font-medium">

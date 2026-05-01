@@ -20,8 +20,37 @@
             
             body {
                 background-color: #f9fafb;
+                margin: 0;
+                min-height: 100vh;
             }
             
+            .page-wrapper {
+                display: flex;
+                min-height: 100vh;
+                width: 100%;
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 240px;
+                background-color: #1f2937;
+                padding: 20px 0;
+                overflow-y: auto;
+                z-index: 10;
+            }
+
+            .sidebar + .main-panel {
+                margin-left: 240px;
+                width: calc(100% - 240px);
+            }
+
+            .main-panel {
+                min-height: 100vh;
+            }
+
             .navbar {
                 background-color: #fff;
                 border-bottom: 1px solid #e5e7eb;
@@ -30,7 +59,6 @@
             
             .sidebar {
                 background-color: #1f2937;
-                min-height: calc(100vh - 70px);
                 padding: 20px 0;
             }
             
@@ -40,17 +68,21 @@
                 padding: 12px 20px;
                 display: block;
                 transition: all 0.3s;
+                background-color: transparent;
+            }
+            
+            .sidebar a:hover,
+            .sidebar a.active {
+                color: #fff;
             }
             
             .sidebar a:hover {
                 background-color: #374151;
-                color: #fff;
                 padding-left: 25px;
             }
             
             .sidebar a.active {
                 background-color: var(--primary-color);
-                color: #fff;
                 border-right: 4px solid #fff;
             }
             
@@ -87,6 +119,28 @@
             .table-hover tbody tr:hover {
                 background-color: #f3f4f6;
             }
+
+            svg {
+                width: auto !important;
+                height: auto !important;
+                max-width: 100%;
+            }
+
+            nav svg {
+                width: 20px !important;
+                height: 20px !important;
+            }
+
+            .pagination svg,
+            ul.pagination svg,
+            .pagination .page-link svg,
+            nav .pagination svg {
+                width: 1rem !important;
+                height: 1rem !important;
+                max-width: 1.25rem !important;
+                max-height: 1.25rem !important;
+                line-height: 1 !important;
+            }
             
             .book-cover {
                 max-height: 250px;
@@ -101,99 +155,92 @@
         </style>
     </head>
     <body>
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/">
-                    <i class="fas fa-book"></i> Perpustakaan
+        <div class="page-wrapper">
+            @auth
+            <aside class="sidebar">
+                <a href="{{ route('dashboard') }}" class="@if(request()->routeIs('dashboard')) active @endif">
+                    <i class="fas fa-chart-line"></i> Dashboard
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        @auth
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                                    <i class="fas fa-user"></i> {{ auth()->user()->name }}
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <form method="POST" action="{{ route('logout') }}">
-                                            @csrf
-                                            <button type="submit" class="dropdown-item">Logout</button>
-                                        </form>
+
+                @if(auth()->user()->role === 'admin')
+                    <a href="{{ route('users.index') }}" class="@if(request()->routeIs('users.*')) active @endif">
+                        <i class="fas fa-users"></i> Pengguna
+                    </a>
+                    <a href="{{ route('categories.index') }}" class="@if(request()->routeIs('categories.*')) active @endif">
+                        <i class="fas fa-list"></i> Kategori
+                    </a>
+                    <a href="{{ route('admin.books.index') }}" class="@if(request()->routeIs('admin.books.*')) active @endif">
+                        <i class="fas fa-book"></i> Buku
+                    </a>
+                    <a href="{{ route('admin.loans.index') }}" class="@if(request()->routeIs('admin.loans.*')) active @endif">
+                        <i class="fas fa-exchange"></i> Peminjaman
+                    </a>
+                    <a href="{{ route('fines.index') }}" class="@if(request()->routeIs('fines.*')) active @endif">
+                        <i class="fas fa-file-invoice-dollar"></i> Denda
+                    </a>
+                    <a href="{{ route('reviews.admin-index') }}" class="@if(request()->routeIs('reviews.admin-index')) active @endif">
+                        <i class="fas fa-star"></i> Review & Rating
+                    </a>
+                @elseif(auth()->user()->role === 'petugas')
+                    <a href="{{ route('admin.books.index') }}" class="@if(request()->routeIs('admin.books.*')) active @endif">
+                        <i class="fas fa-book"></i> Buku
+                    </a>
+                    <a href="{{ route('admin.loans.index') }}" class="@if(request()->routeIs('admin.loans.*')) active @endif">
+                        <i class="fas fa-exchange"></i> Peminjaman
+                    </a>
+                    <a href="{{ route('fines.index') }}" class="@if(request()->routeIs('fines.*')) active @endif">
+                        <i class="fas fa-file-invoice-dollar"></i> Denda
+                    </a>
+                @elseif(auth()->user()->role === 'member')
+                    <a href="{{ route('riwayat') }}" class="@if(request()->routeIs('riwayat')) active @endif">
+                        <i class="fas fa-history"></i> Riwayat Peminjaman
+                    </a>
+                    <a href="{{ route('books.index') }}" class="@if(request()->routeIs('books.index')) active @endif">
+                        <i class="fas fa-search"></i> Cari Buku
+                    </a>
+                    <a href="{{ route('fines.member') }}" class="@if(request()->routeIs('fines.member')) active @endif">
+                        <i class="fas fa-file-invoice-dollar"></i> Denda Saya
+                    </a>
+                @endif
+            </aside>
+            @endauth
+
+            <div class="main-panel">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="/">
+                            <i class="fas fa-book"></i> Perpustakaan Digital Modern
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav ms-auto">
+                                @auth
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                            <i class="fas fa-user"></i> {{ auth()->user()->name }}
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a></li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li>
+                                                <form method="POST" action="{{ route('logout') }}">
+                                                    @csrf
+                                                    <button type="submit" class="dropdown-item">Logout</button>
+                                                </form>
+                                            </li>
+                                        </ul>
                                     </li>
-                                </ul>
-                            </li>
-                        @endauth
-                    </ul>
-                </div>
-            </div>
-        </nav>
+                                @endauth
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
 
-        <div class="container-fluid">
-            <div class="row">
-                <!-- Sidebar -->
-                @auth
-                <div class="col-md-2 sidebar">
-                    @if(auth()->user()->role === 'admin')
-                        <a href="{{ route('dashboard') }}" class="@if(request()->routeIs('dashboard')) active @endif">
-                            <i class="fas fa-chart-line"></i> Dashboard
-                        </a>
-                        <a href="{{ route('users.index') }}" class="@if(request()->routeIs('users.*')) active @endif">
-                            <i class="fas fa-users"></i> Pengguna
-                        </a>
-                        <a href="{{ route('categories.index') }}" class="@if(request()->routeIs('categories.*')) active @endif">
-                            <i class="fas fa-list"></i> Kategori
-                        </a>
-                        <a href="{{ route('admin.books.index') }}" class="@if(request()->routeIs('admin.books.*')) active @endif">
-                            <i class="fas fa-book"></i> Buku
-                        </a>
-                        <a href="{{ route('admin.loans.index') }}" class="@if(request()->routeIs('admin.loans.*')) active @endif">
-                            <i class="fas fa-exchange"></i> Peminjaman
-                        </a>
-                        <a href="{{ route('fines.index') }}" class="@if(request()->routeIs('fines.*')) active @endif">
-                            <i class="fas fa-file-invoice-dollar"></i> Denda
-                        </a>
-                        <a href="{{ route('reviews.admin-index') }}" class="@if(request()->routeIs('reviews.admin-index')) active @endif">
-                            <i class="fas fa-star"></i> Review & Rating
-                        </a>
-                    @elseif(auth()->user()->role === 'petugas')
-                        <a href="{{ route('dashboard') }}" class="@if(request()->routeIs('dashboard')) active @endif">
-                            <i class="fas fa-chart-line"></i> Dashboard
-                        </a>
-                        <a href="{{ route('admin.books.index') }}" class="@if(request()->routeIs('admin.books.*')) active @endif">
-                            <i class="fas fa-book"></i> Buku
-                        </a>
-                        <a href="{{ route('admin.loans.index') }}" class="@if(request()->routeIs('admin.loans.*')) active @endif">
-                            <i class="fas fa-exchange"></i> Peminjaman
-                        </a>
-                        <a href="{{ route('fines.index') }}" class="@if(request()->routeIs('fines.*')) active @endif">
-                            <i class="fas fa-file-invoice-dollar"></i> Denda
-                        </a>
-                    @elseif(auth()->user()->role === 'member')
-                        <a href="{{ route('dashboard') }}" class="@if(request()->routeIs('dashboard')) active @endif">
-                            <i class="fas fa-chart-line"></i> Riwayat Peminjaman
-                        </a>
-                        <a href="{{ route('books.index') }}" class="@if(request()->routeIs('books.index')) active @endif">
-                            <i class="fas fa-search"></i> Cari Buku
-                        </a>
-                        <a href="{{ route('loans.index') }}" class="@if(request()->routeIs('loans.index')) active @endif">
-                            <i class="fas fa-exchange"></i> Peminjaman Saya
-                        </a>
-                        <a href="{{ route('fines.member') }}" class="@if(request()->routeIs('fines.member')) active @endif">
-                            <i class="fas fa-file-invoice-dollar"></i> Denda Saya
-                        </a>
-                    @endif
-                </div>
-                @endauth
-
-                <!-- Main Content -->
-                <div class="col-md-10 main-content">
-                    @if ($errors->any())
+                <div class="page-content">
+                    <div class="container-fluid">
+                        @if ($errors->any())
                         <div class="alert alert-danger" role="alert">
                             <h4 class="alert-heading">Terjadi Kesalahan!</h4>
                             <ul>
@@ -220,6 +267,7 @@
 
                     @yield('content')
                 </div>
+            </div>
             </div>
         </div>
 

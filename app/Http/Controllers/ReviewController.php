@@ -33,7 +33,7 @@ class ReviewController extends Controller
     public function adminIndex()
     {
         if (auth()->user()->role !== 'admin') {
-            abort(403);
+            return redirect()->route('dashboard')->with('error', 'Unauthorized access');
         }
 
         $reviews = Review::with(['user', 'book'])
@@ -110,7 +110,7 @@ class ReviewController extends Controller
         $review = Review::findOrFail($reviewId);
 
         if (auth()->id() !== $review->user_id && auth()->user()->role !== 'admin') {
-            abort(403);
+            return redirect()->route('dashboard')->with('error', 'Unauthorized access');
         }
 
         $book = $review->book;
@@ -126,7 +126,7 @@ class ReviewController extends Controller
         $review = Review::findOrFail($reviewId);
 
         if (auth()->id() !== $review->user_id && auth()->user()->role !== 'admin') {
-            abort(403);
+            return redirect()->route('dashboard')->with('error', 'Unauthorized access');
         }
 
         $validated = $request->validate([
@@ -148,7 +148,7 @@ class ReviewController extends Controller
         $review = Review::findOrFail($reviewId);
 
         if (auth()->id() !== $review->user_id && auth()->user()->role !== 'admin') {
-            abort(403);
+            return redirect()->route('dashboard')->with('error', 'Unauthorized access');
         }
 
         $bookId = $review->book_id;
@@ -164,7 +164,7 @@ class ReviewController extends Controller
     public function approve($reviewId)
     {
         if (auth()->user()->role !== 'admin') {
-            abort(403);
+            return redirect()->route('dashboard')->with('error', 'Unauthorized access');
         }
 
         $review = Review::findOrFail($reviewId);
@@ -179,7 +179,7 @@ class ReviewController extends Controller
     public function reject($reviewId)
     {
         if (auth()->user()->role !== 'admin') {
-            abort(403);
+            return redirect()->route('dashboard')->with('error', 'Unauthorized access');
         }
 
         $review = Review::findOrFail($reviewId);

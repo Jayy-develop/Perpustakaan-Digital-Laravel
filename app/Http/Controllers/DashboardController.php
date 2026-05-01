@@ -33,8 +33,12 @@ class DashboardController extends Controller
             ];
             return view('petugas.dashboard', $data);
         } else {
-            $user_loans = $user->loans()->with('book')->paginate(10);
-            return view('member.dashboard', ['loans' => $user_loans]);
+            $data = [
+                'total_books' => Book::count(),
+                'active_loans' => $user->loans()->where('status', 'borrowed')->count(),
+                'returned_loans' => $user->loans()->where('status', 'returned')->count(),
+            ];
+            return view('dashboard', $data);
         }
     }
 }

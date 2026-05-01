@@ -1,80 +1,189 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-    @vite('resources/css/app.css')
-</head>
-<body class="bg-gradient-to-br from-black via-gray-900 to-gray-800 min-h-screen flex items-center justify-center">
+<x-guest-layout>
 
-    <div class="w-full max-w-md p-8 rounded-2xl backdrop-blur-xl bg-white/5 border border-white/10 shadow-2xl">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-        <!-- Title -->
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-semibold text-white tracking-wide">
-                Create Account
-            </h1>
-            <p class="text-gray-400 text-sm mt-2">
-                Exclusive access starts here
-            </p>
-        </div>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
+body{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#020617;
+overflow:hidden;
+}
 
-            <!-- Name -->
-            <div class="mb-4">
-                <label class="text-gray-300 text-sm">Name</label>
-                <input type="text" name="name" value="{{ old('name') }}" required
-                    class="w-full mt-1 px-4 py-2 rounded-lg bg-white/10 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-gray-400">
-                @error('name')
-                    <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+body::before{
+content:"";
+position:absolute;
+width:700px;
+height:700px;
+background:radial-gradient(circle,#6366f1,transparent);
+filter:blur(200px);
+top:-200px;
+left:-200px;
+opacity:.4;
+}
 
-            <!-- Email -->
-            <div class="mb-4">
-                <label class="text-gray-300 text-sm">Email</label>
-                <input type="email" name="email" value="{{ old('email') }}" required
-                    class="w-full mt-1 px-4 py-2 rounded-lg bg-white/10 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-gray-400">
-                @error('email')
-                    <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+body::after{
+content:"";
+position:absolute;
+width:600px;
+height:600px;
+background:radial-gradient(circle,#9333ea,transparent);
+filter:blur(180px);
+bottom:-200px;
+right:-200px;
+opacity:.4;
+}
 
-            <!-- Password -->
-            <div class="mb-4">
-                <label class="text-gray-300 text-sm">Password</label>
-                <input type="password" name="password" required
-                    class="w-full mt-1 px-4 py-2 rounded-lg bg-white/10 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-gray-400">
-                @error('password')
-                    <p class="text-red-400 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
+.card{
+width:420px;
+padding:50px;
+border-radius:25px;
+background:rgba(255,255,255,0.06);
+backdrop-filter:blur(30px);
+border:1px solid rgba(255,255,255,0.15);
+box-shadow:
+0 40px 80px rgba(0,0,0,0.6),
+inset 0 0 40px rgba(255,255,255,0.05);
+color:blue;
+}
 
-            <!-- Confirm Password -->
-            <div class="mb-6">
-                <label class="text-gray-300 text-sm">Confirm Password</label>
-                <input type="password" name="password_confirmation" required
-                    class="w-full mt-1 px-4 py-2 rounded-lg bg-white/10 text-white border border-white/10 focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-gray-400">
-            </div>
+.card h1{
+font-size:32px;
+font-weight:600;
+text-align:center;
+margin-bottom:10px;
+}
 
-            <!-- Button -->
-            <button type="submit"
-                class="w-full py-2 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium hover:scale-[1.02] transition-all duration-300 shadow-lg shadow-purple-500/20">
-                Register
-            </button>
+.subtitle{
+text-align:center;
+color:#94a3b8;
+margin-bottom:35px;
+font-size:14px;
+}
 
-            <!-- Login -->
-            <p class="text-center text-gray-400 text-sm mt-6">
-                Already have an account?
-                <a href="{{ route('login') }}" class="text-purple-400 hover:underline">
-                    Login
-                </a>
-            </p>
+.group{
+margin-bottom:22px;
+}
 
-        </form>
-    </div>
+.group label{
+font-size:13px;
+color:#cbd5f5;
+display:block;
+margin-bottom:6px;
+}
 
-</body>
-</html>
+.input{
+width:100%;
+padding:14px;
+border-radius:12px;
+border:none;
+background:rgba(255,255,255,0.12);
+color:white;
+outline:none;
+transition:.3s;
+}
+
+.input:focus{
+background:rgba(255,255,255,0.2);
+box-shadow:0 0 0 2px #6366f1;
+}
+
+.login-btn{
+margin-top:30px;
+width:100%;
+padding:15px;
+border-radius:14px;
+border:none;
+background:linear-gradient(135deg,#6366f1,#9333ea);
+color:white;
+font-size:16px;
+cursor:pointer;
+transition:.35s;
+}
+
+.login-btn:hover{
+transform:translateY(-3px);
+box-shadow:0 20px 40px rgba(99,102,241,.6);
+}
+
+.footer{
+margin-top:25px;
+text-align:center;
+font-size:12px;
+color:#64748b;
+}
+</style>
+
+<div class="card">
+
+<h1>Sign Up</h1>
+<p class="subtitle">Create your account and join the library</p>
+
+<x-auth-session-status :status="session('status')" />
+
+<form method="POST" action="{{ route('register') }}">
+@csrf
+
+<div class="group">
+<label>Name</label>
+<input class="input"
+type="text"
+name="name"
+value="{{ old('name') }}"
+required autofocus
+placeholder="Your full name">
+<x-input-error :messages="$errors->get('name')" />
+</div>
+
+<div class="group">
+<label>Email Address</label>
+<input class="input"
+type="email"
+name="email"
+value="{{ old('email') }}"
+required
+placeholder="you@email.com">
+<x-input-error :messages="$errors->get('email')" />
+</div>
+
+<div class="group">
+<label>Password</label>
+<input class="input"
+type="password"
+name="password"
+required
+placeholder="••••••••">
+<x-input-error :messages="$errors->get('password')" />
+</div>
+
+<div class="group">
+<label>Confirm Password</label>
+<input class="input"
+type="password"
+name="password_confirmation"
+required
+placeholder="••••••••">
+</div>
+
+<button class="login-btn" type="submit">
+Register
+</button>
+
+<div class="footer">
+Already have an account? <a href="{{ route('login') }}" style="color:#a5b4fc; text-decoration:underline;">Login</a>
+</div>
+
+</form>
+
+</div>
+
+</x-guest-layout>

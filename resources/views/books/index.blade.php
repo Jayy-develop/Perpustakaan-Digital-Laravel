@@ -34,5 +34,5 @@
     <div class="col-12 text-center py-5"><p class="text-muted">Tidak ada buku</p></div>
     @endforelse
 </div>
-{{ $books->links() }}
+{{ $books->withQueryString()->links('vendor.pagination.bootstrap-5-no-prev-next') }}
 @endsection

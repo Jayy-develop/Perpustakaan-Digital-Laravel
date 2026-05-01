@@ -1,10 +1,11 @@
 @extends('layouts.app')
 @section('title', 'Peminjaman')
 @section('content')
-<div class="row mb-4">
-    <div class="col-md-6"><h2><i class="fas fa-exchange"></i> Peminjaman</h2></div>
-</div>
-<div class="card">
+<div class="container-fluid py-3">
+    <div class="row mb-4">
+        <div class="col-md-6"><h2><i class="fas fa-exchange"></i> Peminjaman</h2></div>
+    </div>
+    <div class="card mb-0">
     <div class="table-responsive">
         <table class="table table-hover mb-0">
             <thead class="table-light">
@@ -31,6 +32,8 @@
             </tbody>
         </table>
     </div>
+    <div class="mt-3">
+        {{ $loans->links('pagination::bootstrap-5') }}
+    </div>
 </div>
-{{ $loans->links() }}
 @endsection

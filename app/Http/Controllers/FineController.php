@@ -13,8 +13,8 @@ class FineController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->role !== 'admin') {
-            abort(403);
+        if (!in_array(auth()->user()->role, ['admin', 'petugas'])) {
+            return redirect()->route('dashboard')->with('error', 'Unauthorized access');
         }
 
         $fineStats = $this->getStats();
@@ -48,8 +48,8 @@ class FineController extends Controller
      */
     public function show(Fine $fine)
     {
-        if (auth()->user()->role !== 'admin' && auth()->id() !== $fine->loan->user_id) {
-            abort(403);
+        if (!in_array(auth()->user()->role, ['admin', 'petugas']) && auth()->id() !== $fine->loan->user_id) {
+            return redirect()->route('dashboard')->with('error', 'Unauthorized access');
         }
 
         return view('fines.show', compact('fine'));
@@ -61,7 +61,7 @@ class FineController extends Controller
     public function markPaid(Fine $fine)
     {
         if (!in_array(auth()->user()->role, ['admin', 'petugas'])) {
-            abort(403);
+            return redirect()->route('dashboard')->with('error', 'Unauthorized access');
         }
 
         if ($fine->status === 'paid') {
@@ -79,7 +79,7 @@ class FineController extends Controller
     public function destroy(Fine $fine)
     {
         if (auth()->user()->role !== 'admin') {
-            abort(403);
+            return redirect()->route('dashboard')->with('error', 'Unauthorized access');
         }
 
         $fine->delete();
@@ -92,8 +92,8 @@ class FineController extends Controller
      */
     public function generateFines()
     {
-        if (auth()->user()->role !== 'admin') {
-            abort(403);
+        if (!in_array(auth()->user()->role, ['admin', 'petugas'])) {
+            return redirect()->route('dashboard')->with('error', 'Unauthorized access');
         }
 
         $overdueLoans = Loan::where('status', 'returned')
@@ -107,10 +107,12 @@ class FineController extends Controller
             $fineAmount = Fine::calculateFine($loan->id);
 
             if ($fineAmount > 0) {
+                $daysOverdue = (int) ($fineAmount / 5000);
+
                 Fine::create([
                     'loan_id' => $loan->id,
                     'amount' => $fineAmount,
-                    'reason' => 'Late return - ' . $fineAmount / 5000 . ' days overdue',
+                    'reason' => 'Late return - ' . $daysOverdue . ' days overdue',
                     'status' => 'pending'
                 ]);
                 $finesCreated++;

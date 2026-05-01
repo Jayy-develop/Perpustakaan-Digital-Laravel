@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Loan;
 use App\Models\Book;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LoanController extends Controller

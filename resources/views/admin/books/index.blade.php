@@ -81,10 +81,12 @@
                         <a href="{{ route('admin.books.show', $book->id) }}" class="btn btn-sm btn-info" title="Lihat">
                             <i class="fas fa-eye"></i>
                         </a>
-                        @if(auth()->user()->role === 'admin')
+                        @if(auth()->user()->role === 'admin' || auth()->user()->role === 'petugas')
                         <a href="{{ route('admin.books.edit', $book->id) }}" class="btn btn-sm btn-warning" title="Edit">
                             <i class="fas fa-edit"></i>
                         </a>
+                        @endif
+                        @if(auth()->user()->role === 'admin')
                         <form action="{{ route('admin.books.destroy', $book->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')

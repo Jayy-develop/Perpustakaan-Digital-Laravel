@@ -141,7 +141,7 @@ color:#64748b;
 <div class="card">
 
 <h1>Sign In</h1>
-<p class="subtitle">Access your premium dashboard</p>
+<p class="subtitle">Explore all books</p>
 
 <x-auth-session-status :status="session('status')" />
 
