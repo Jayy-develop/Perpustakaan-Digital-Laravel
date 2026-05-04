@@ -96,30 +96,52 @@ class FineController extends Controller
             return redirect()->route('dashboard')->with('error', 'Unauthorized access');
         }
 
-        $overdueLoans = Loan::where('status', 'returned')
-            ->whereDoesntHave('fines')
+        // Get all returned loans
+        $returnedLoans = Loan::where('status', 'returned')
             ->with('book')
             ->get();
 
         $finesCreated = 0;
+        $finesUpdated = 0;
 
-        foreach ($overdueLoans as $loan) {
+        foreach ($returnedLoans as $loan) {
             $fineAmount = Fine::calculateFine($loan->id);
 
             if ($fineAmount > 0) {
                 $daysOverdue = (int) ($fineAmount / 5000);
+                $reason = 'Late return - ' . $daysOverdue . ' days overdue';
 
-                Fine::create([
-                    'loan_id' => $loan->id,
-                    'amount' => $fineAmount,
-                    'reason' => 'Late return - ' . $daysOverdue . ' days overdue',
-                    'status' => 'pending'
-                ]);
-                $finesCreated++;
+                // Check if fine already exists
+                $existingFine = Fine::where('loan_id', $loan->id)->first();
+
+                if ($existingFine) {
+                    // Update existing fine
+                    if ($existingFine->amount != $fineAmount) {
+                        $existingFine->update([
+                            'amount' => $fineAmount,
+                            'reason' => $reason
+                        ]);
+                        $finesUpdated++;
+                    }
+                } else {
+                    // Create new fine
+                    Fine::create([
+                        'loan_id' => $loan->id,
+                        'amount' => $fineAmount,
+                        'reason' => $reason,
+                        'status' => 'pending'
+                    ]);
+                    $finesCreated++;
+                }
             }
         }
 
-        return back()->with('success', "$finesCreated denda berhasil dibuat");
+        $message = "$finesCreated denda baru dibuat";
+        if ($finesUpdated > 0) {
+            $message .= " dan $finesUpdated denda diperbarui";
+        }
+
+        return back()->with('success', $message);
     }
 
     /**

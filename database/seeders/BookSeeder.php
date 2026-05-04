@@ -66,6 +66,37 @@ class BookSeeder extends Seeder
             ['category_id' => 4, 'title' => 'Buku Pintar Coding', 'author' => 'Ridwan A.', 'publisher' => 'Deepublish', 'year' => 2021, 'stock' => 15, 'description' => 'Panduan dasar pemrograman untuk pelajar.'],
             ['category_id' => 5, 'title' => 'Seni Menulis Novel', 'author' => 'Ruhut Sitompul', 'publisher' => 'Erlangga', 'year' => 2015, 'stock' => 10, 'description' => 'Panduan praktis menulis cerita dengan baik.'],
             ['category_id' => 6, 'title' => 'Belajar Bahasa Indonesia', 'author' => 'Irmawati', 'publisher' => 'Erlangga', 'year' => 2012, 'stock' => 14, 'description' => 'Buku pendidikan bahasa Indonesia.'],
+            // Buku tambahan untuk kategori Non-Fiksi
+            ['category_id' => 2, 'title' => 'Atomic Habits', 'author' => 'James Clear', 'publisher' => 'Gramedia Pustaka Utama', 'year' => 2018, 'stock' => 15, 'description' => 'Panduan membangun kebiasaan baik dan menghilangkan kebiasaan buruk.'],
+            ['category_id' => 2, 'title' => 'Sapiens: Riwayat Singkat Umat Manusia', 'author' => 'Yuval Noah Harari', 'publisher' => 'Kepustakaan Populer Gramedia', 'year' => 2014, 'stock' => 12, 'description' => 'Sejarah umat manusia dari zaman batu hingga era modern.'],
+            ['category_id' => 2, 'title' => '21 Lessons for the 21st Century', 'author' => 'Yuval Noah Harari', 'publisher' => 'Kepustakaan Populer Gramedia', 'year' => 2018, 'stock' => 10, 'description' => 'Refleksi tentang masa depan umat manusia.'],
+            ['category_id' => 2, 'title' => 'The Subtle Art of Not Giving a F*ck', 'author' => 'Mark Manson', 'publisher' => 'HarperOne', 'year' => 2016, 'stock' => 14, 'description' => 'Panduan hidup yang jujur dan tanpa basa-basi.'],
+            ['category_id' => 2, 'title' => 'Educated', 'author' => 'Tara Westover', 'publisher' => 'Random House', 'year' => 2018, 'stock' => 11, 'description' => 'Memoar tentang pendidikan dan keluarga.'],
+            // Buku tambahan untuk kategori Biografi
+            ['category_id' => 3, 'title' => 'Becoming', 'author' => 'Michelle Obama', 'publisher' => 'Crown Publishing Group', 'year' => 2018, 'stock' => 13, 'description' => 'Memoar mantan Ibu Negara Amerika Serikat.'],
+            ['category_id' => 3, 'title' => 'Steve Jobs', 'author' => 'Walter Isaacson', 'publisher' => 'Simon & Schuster', 'year' => 2011, 'stock' => 9, 'description' => 'Biografi resmi pendiri Apple Inc.'],
+            ['category_id' => 3, 'title' => 'The Innovators', 'author' => 'Walter Isaacson', 'publisher' => 'Simon & Schuster', 'year' => 2014, 'stock' => 8, 'description' => 'Sejarah revolusi digital dan para inovatornya.'],
+            ['category_id' => 3, 'title' => 'Elon Musk: Tesla, SpaceX, and the Quest for a Fantastic Future', 'author' => 'Ashlee Vance', 'publisher' => 'HarperCollins', 'year' => 2015, 'stock' => 10, 'description' => 'Biografi Elon Musk dan perusahaan-perusahaannya.'],
+            ['category_id' => 3, 'title' => 'The Wright Brothers', 'author' => 'David McCullough', 'publisher' => 'Simon & Schuster', 'year' => 2015, 'stock' => 7, 'description' => 'Kisah para pionir penerbangan.'],
+            ['category_id' => 3, 'title' => 'Mahatma Gandhi: The Story of My Life', 'author' => 'Mahatma Gandhi', 'publisher' => 'Beacon Press', 'year' => 1927, 'stock' => 6, 'description' => 'Autobiografi pemimpin kemerdekaan India.'],
+            ['category_id' => 3, 'title' => 'Long Walk to Freedom', 'author' => 'Nelson Mandela', 'publisher' => 'Little, Brown and Company', 'year' => 1994, 'stock' => 11, 'description' => 'Autobiografi mantan Presiden Afrika Selatan.'],
+            ['category_id' => 3, 'title' => 'The Diary of a Young Girl', 'author' => 'Anne Frank', 'publisher' => 'Contact Publishing', 'year' => 1947, 'stock' => 12, 'description' => 'Diary Anne Frank selama Perang Dunia II.'],
+            // Buku tambahan untuk kategori Sains
+            ['category_id' => 4, 'title' => 'A Brief History of Time', 'author' => 'Stephen Hawking', 'publisher' => 'Bantam Books', 'year' => 1988, 'stock' => 15, 'description' => 'Penjelasan tentang kosmologi dan fisika modern.'],
+            ['category_id' => 4, 'title' => 'The Gene: An Intimate History', 'author' => 'Siddhartha Mukherjee', 'publisher' => 'Scribner', 'year' => 2016, 'stock' => 9, 'description' => 'Sejarah penemuan gen dan genetika.'],
+            ['category_id' => 4, 'title' => 'Sapiens: A Brief History of Humankind', 'author' => 'Yuval Noah Harari', 'publisher' => 'Harper', 'year' => 2014, 'stock' => 13, 'description' => 'Evolusi manusia dari zaman prasejarah hingga modern.'],
+            ['category_id' => 4, 'title' => 'The Body Keeps the Score', 'author' => 'Bessel van der Kolk', 'publisher' => 'Penguin Books', 'year' => 2014, 'stock' => 11, 'description' => 'Dampak trauma pada tubuh dan pikiran.'],
+            ['category_id' => 4, 'title' => 'Thinking, Fast and Slow', 'author' => 'Daniel Kahneman', 'publisher' => 'Farrar, Straus and Giroux', 'year' => 2011, 'stock' => 10, 'description' => 'Psikologi pengambilan keputusan manusia.'],
+            ['category_id' => 4, 'title' => 'The Immortal Life of Henrietta Lacks', 'author' => 'Rebecca Skloot', 'publisher' => 'Crown Publishing Group', 'year' => 2010, 'stock' => 8, 'description' => 'Kisah sel HeLa dan etika medis.'],
+            ['category_id' => 4, 'title' => 'Guns, Germs, and Steel', 'author' => 'Jared Diamond', 'publisher' => 'W.W. Norton & Company', 'year' => 1997, 'stock' => 12, 'description' => 'Mengapa beberapa masyarakat lebih maju daripada yang lain.'],
+            ['category_id' => 4, 'title' => 'The Emperor of All Maladies', 'author' => 'Siddhartha Mukherjee', 'publisher' => 'Scribner', 'year' => 2010, 'stock' => 9, 'description' => 'Sejarah kanker dan perjuangannya.'],
+            // Buku tambahan untuk kategori Seni
+            ['category_id' => 5, 'title' => 'The Non-Designer\'s Design Book', 'author' => 'Robin Williams', 'publisher' => 'Peachpit Press', 'year' => 2008, 'stock' => 11, 'description' => 'Panduan desain untuk non-desainer.'],
+            ['category_id' => 5, 'title' => 'Steal Like an Artist', 'author' => 'Austin Kleon', 'publisher' => 'Workman Publishing', 'year' => 2012, 'stock' => 9, 'description' => 'Panduan kreativitas dan seni.'],
+            ['category_id' => 5, 'title' => 'The Creative Habit', 'author' => 'Twyla Tharp', 'publisher' => 'Simon & Schuster', 'year' => 2003, 'stock' => 7, 'description' => 'Membangun kebiasaan kreatif.'],
+            // Buku tambahan untuk kategori Pendidikan
+            ['category_id' => 6, 'title' => 'Matematika untuk SMA', 'author' => 'Tim Matematika', 'publisher' => 'Erlangga', 'year' => 2020, 'stock' => 20, 'description' => 'Buku ajar matematika untuk siswa SMA.'],
+            ['category_id' => 6, 'title' => 'Fisika Modern', 'author' => 'Prof. Dr. Ahmad Tusi', 'publisher' => 'ITB Press', 'year' => 2019, 'stock' => 12, 'description' => 'Konsep-konsep fisika modern untuk mahasiswa.'],
         ];
 
         foreach ($books as $book) {

@@ -3,6 +3,7 @@
 @section('title', 'Admin Dashboard')
 
 @section('content')
+@section('content')
 <div class="row mb-4">
     <div class="col-md-12">
         <h2><i class="fas fa-chart-line"></i> Dashboard Admin</h2>

@@ -10,6 +10,7 @@
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         
         <style>
@@ -19,9 +20,13 @@
             }
             
             body {
+                font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
                 background-color: #f9fafb;
                 margin: 0;
                 min-height: 100vh;
+                color: #0f172a;
+                -webkit-font-smoothing:antialiased;
+                -moz-osx-font-smoothing:grayscale;
             }
             
             .page-wrapper {
@@ -92,9 +97,21 @@
             
             .card {
                 border: none;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                border-radius: 12px;
+                box-shadow: 0 6px 18px rgba(15,23,42,0.06);
                 margin-bottom: 20px;
+                background: #ffffff;
             }
+
+            .metric-icon {
+                width:56px; height:56px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.25rem;
+            }
+
+            .metric-card .card-body { padding: 1.25rem; }
+
+            .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+
+            .card .muted { color: #6b7280; }
             
             .badge-borrowed {
                 background-color: #fbbf24;
@@ -152,10 +169,17 @@
                 font-size: 0.875rem;
                 color: #6b7280;
             }
+
+            .brand-text {
+                font-size: 0.95rem;
+                font-weight: 800;
+                color: #0f172a;
+                letter-spacing: 0.2px;
+            }
         </style>
     </head>
     <body>
-        <div class="page-wrapper">
+        <div class="page-wrapper">  
             @auth
             <aside class="sidebar">
                 <a href="{{ route('dashboard') }}" class="@if(request()->routeIs('dashboard')) active @endif">
@@ -192,15 +216,35 @@
                         <i class="fas fa-file-invoice-dollar"></i> Denda
                     </a>
                 @elseif(auth()->user()->role === 'member')
-                    <a href="{{ route('riwayat') }}" class="@if(request()->routeIs('riwayat')) active @endif">
-                        <i class="fas fa-history"></i> Riwayat Peminjaman
+                    <div class="sidebar-header px-3 py-4">
+                        <div class="user-info text-center mb-4">
+                            <div class="user-avatar mx-auto mb-2">
+                                <i class="fas fa-user-circle fa-3x text-primary"></i>
+                            </div>
+                            <div class="user-name text-white fw-bold">{{ auth()->user()->name }}</div>
+                            <div class="user-role text-light opacity-75">Member</div>
+                        </div>
+                    </div>
+                    <a href="{{ route('dashboard') }}" class="@if(request()->routeIs('dashboard')) active @endif">
+                        <i class="fas fa-home"></i> <span>Dashboard</span>
                     </a>
-                    <a href="{{ route('books.index') }}" class="@if(request()->routeIs('books.index')) active @endif">
-                        <i class="fas fa-search"></i> Cari Buku
+                    <a href="{{ route('books.index') }}" class="@if(request()->routeIs('books.*')) active @endif">
+                        <i class="fas fa-search"></i> <span>Cari Buku</span>
+                    </a>
+                    <a href="{{ route('loans.index') }}" class="@if(request()->routeIs('loans.*')) active @endif">
+                        <i class="fas fa-book-reader"></i> <span>Peminjaman Saya</span>
+                    </a>
+                    <a href="{{ route('riwayat') }}" class="@if(request()->routeIs('riwayat')) active @endif">
+                        <i class="fas fa-history"></i> <span>Riwayat</span>
                     </a>
                     <a href="{{ route('fines.member') }}" class="@if(request()->routeIs('fines.member')) active @endif">
-                        <i class="fas fa-file-invoice-dollar"></i> Denda Saya
+                        <i class="fas fa-file-invoice-dollar"></i> <span>Denda Saya</span>
                     </a>
+                    <div class="sidebar-footer mt-auto px-3">
+                        <a href="{{ route('profile.edit') }}" class="sidebar-link">
+                            <i class="fas fa-user-cog"></i> <span>Pengaturan</span>
+                        </a>
+                    </div>
                 @endif
             </aside>
             @endauth
@@ -208,8 +252,9 @@
             <div class="main-panel">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="/">
-                            <i class="fas fa-book"></i> Perpustakaan Digital Modern
+                        <a class="navbar-brand d-flex align-items-center" href="/">
+                            <i class="fas fa-book me-2"></i>
+                            <span class="brand-text">Perpustakaan Digital Modern</span>
                         </a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                             <span class="navbar-toggler-icon"></span>

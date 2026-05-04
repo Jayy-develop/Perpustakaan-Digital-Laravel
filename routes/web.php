@@ -21,10 +21,9 @@ Route::get('/', function () {
 
     $books = Book::with('category')
         ->latest()
-        ->take(12)
         ->get();
 
-    $categories = Category::take(4)->get();
+    $categories = Category::all();
 
     return view('welcome', compact('books', 'categories'));
 })->name('welcome');

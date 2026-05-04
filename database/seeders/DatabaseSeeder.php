@@ -17,16 +17,16 @@ class DatabaseSeeder extends Seeder
     {
         // Create Admin User
         User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
             'password' => bcrypt('password'),
             'role' => 'admin',
         ]);
 
         // Create Petugas User
         User::factory()->create([
-            'name' => 'Petugas User',
-            'email' => 'petugas@example.com',
+            'name' => 'Petugas',
+            'email' => 'petugas@gmail.com',
             'password' => bcrypt('password'),
             'role' => 'petugas',
         ]);
@@ -34,8 +34,8 @@ class DatabaseSeeder extends Seeder
         // Create Member Users
         for ($i = 1; $i <= 5; $i++) {
             User::factory()->create([
-                'name' => 'Member User ' . $i,
-                'email' => 'member' . $i . '@example.com',
+                'name' => 'Member ' . $i,
+                'email' => 'member' . $i . '@gmail.com',
                 'password' => bcrypt('password'),
                 'role' => 'member',
             ]);
